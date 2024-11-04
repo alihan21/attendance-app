@@ -1,7 +1,14 @@
+using AttendanceApp.Mocks;
+using AttendanceApp.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IPlayerRepository, MockPlayerRepository>();
+builder.Services.AddMvc();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
