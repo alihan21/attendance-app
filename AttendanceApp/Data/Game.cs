@@ -2,7 +2,7 @@
 {
     public class Game
     {
-        public String GameId{ get; set; }
+        public int GameId { get; set; }
 
         public String Title{ get; set; }
 

@@ -1,12 +1,19 @@
-using AttendanceApp.Mocks;
+using AttendanceApp.Data;
 using AttendanceApp.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IPlayerRepository, MockPlayerRepository>();
+builder.Services.AddTransient<IPlayerRepository, PlayerRepositoryImpl>();
+builder.Services.AddTransient<IGameRepository, GameRepositoryImpl>();
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("FreeAspHostingNet")
+));
+
 builder.Services.AddMvc();
 builder.Services.AddControllers();
 
@@ -25,10 +32,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=player}/{action=getallplayers}/{id?}");
+
+
+DbInitializer.Seed(app);
 
 app.Run();

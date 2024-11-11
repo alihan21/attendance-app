@@ -18,5 +18,16 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+#playerNameBtnDiv {
+    margin: 20px;
+    width: fit-content;
+}
+
+#gameDiv {
+    border: solid;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }

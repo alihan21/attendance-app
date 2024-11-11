@@ -1,0 +1,45 @@
+﻿@using AttendanceApp.ViewModels
+@model GameViewModel
+
+<div>
+    <h6>You are logged in as: @Model.LoggedInPlayer.Name</h6>
+</div>
+
+@{
+    foreach (var game in Model.Games)
+    {
+        <div id="gameDiv">
+            <div id="gameInfoDiv">
+                <p>@game.Title</p>
+                <p>@game.Date</p>
+                <p>@game.Address</p>
+            </div>
+            <div>
+                <form asp-controller="Game" asp-action="SubmitAttendancePresent" asp-route-gameId="@game.GameId" asp-route-playerId="@Model.LoggedInPlayer.PlayerId" method="post">
+                    <div class="form-group">
+                        <input type="submit" value="Present" class="btn btn-primary alert-success" />
+                    </div>
+                </form>
+                <form asp-controller="Game" asp-action="SubmitAttendanceMaybe" asp-route-gameId="@game.GameId" asp-route-playerId="@Model.LoggedInPlayer.PlayerId" method="post">
+                    <div class="form-group">
+                        <input type="submit" value="Maybe" class="btn btn-primary alert-warning" />
+                    </div>
+                </form>
+                <form asp-controller="Game" asp-action="SubmitAttendanceAbsent" asp-route-gameId="@game.GameId" asp-route-playerId="@Model.LoggedInPlayer.PlayerId" method="post">
+                    <div class="form-group">
+                        <input type="submit" value="Absent" class="btn btn-primary alert-danger" />
+                    </div>
+                </form>
+            </div>
+            <div id="gameAttendeesDiv">
+                <p>List of present players:</p>
+                @foreach (var attendee in game.Attendees)
+                {
+                    <span>@attendee.Name -> </span>
+                    <span>@Enum.GetName(typeof(AttendanceApp.Data.AttendanceType), @attendee.IsPresent)</span>
+                    <p></p>
+                }
+            </div>
+        </div>
+    }
+}

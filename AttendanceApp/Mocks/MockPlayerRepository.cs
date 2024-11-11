@@ -1,5 +1,6 @@
 ﻿using AttendanceApp.Data;
 using AttendanceApp.Repositories;
+using System.Linq;
 
 namespace AttendanceApp.Mocks
 {
@@ -7,12 +8,32 @@ namespace AttendanceApp.Mocks
     {
         public IEnumerable<Player> GetAllPlayers()
         {
-            return
-            [
-               new Player { PlayerId = "123", Name = "Alihan Fevziev", PlayerImage = "none" },
-               new Player { PlayerId = "456", Name = "Staf Lautsnay", PlayerImage = "none" },
-               new Player { PlayerId = "789", Name = "Yves De Backer", PlayerImage = "none" }
-            ];
+            return MockedPlayers;
         }
+
+        public Player GetPlayerById(int playerId)
+        {
+            var player = MockedPlayers.FirstOrDefault(player => player.PlayerId == playerId);
+
+            if (player == null)
+            {
+                player = new Player
+                {
+                    PlayerId = -1,
+                    Name = "Default"
+                };
+            }
+
+            return player;
+        }
+
+
+
+
+        private readonly IEnumerable<Player> MockedPlayers = new List<Player>() {
+            new() { PlayerId = 123, Name = "Alihan Fevziev", PlayerImage = "none" },
+            new() { PlayerId = 456, Name = "Staf Lautsnay", PlayerImage = "none" },
+            new() { PlayerId = 789, Name = "Yves De Backer", PlayerImage = "none" }
+        };
     }
 }

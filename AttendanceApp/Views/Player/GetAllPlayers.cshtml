@@ -2,14 +2,17 @@
 @model IEnumerable<Player>
 
 <div>
-    <h6>List of all player:</h6>
+    <h6>List of all players:</h6>
 </div>
 
 @{
-    foreach(var player in Model)
+    foreach (var player in Model)
     {
-        <div>
-            <h3>@player.Name</h3>
-        </div>
+        <form asp-controller="Game" asp-action="GetAll" asp-route-id="@player.PlayerId">
+            <div class="form-group" id="playerNameBtnDiv">
+                <label>@player.Name -> </label>
+                <input type="submit" value="Log in" class="btn btn-primary" />
+            </div>
+        </form>
     }
 }
